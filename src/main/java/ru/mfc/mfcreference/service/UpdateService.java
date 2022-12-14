@@ -43,7 +43,7 @@ public class UpdateService {
 
     public List<String> getOktmoListId() throws JsonProcessingException {
         List<String> oktmoListId = new ArrayList<>();
-        JsonNode node = mapper.readTree(getUrlResponse(oktmoListUrl)).get("_embedded").get("oktmoObjects");
+        JsonNode node = mapper.readTree(getBodyResponse(oktmoListUrl)).get("_embedded").get("oktmoObjects");
         if (node.isArray()) {
             for (JsonNode objNode : node) {
                 oktmoListId.add(objNode.get("id").asText());
@@ -55,7 +55,7 @@ public class UpdateService {
     public void saveOfficeList(List<String> oktmoListId) throws JsonProcessingException {
         for(String oktmoId : oktmoListId){
             String oktmoObjectListUrl1 = oktmoObjectListUrl + oktmoId + "/units";
-            JsonNode node = mapper.readTree(getUrlResponse(oktmoObjectListUrl1)).get("_embedded").get("units");
+            JsonNode node = mapper.readTree(getBodyResponse(oktmoObjectListUrl1)).get("_embedded").get("units");
             if (node.isArray()) {
                 for (JsonNode objNode : node) {
                     office = new Office();
@@ -81,12 +81,14 @@ public class UpdateService {
         }
     }
 
-    private String getUnitService(String unitId){
+    private Map<String, Object> getUnitService(String unitId) throws JsonProcessingException {
         String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
-        return getUrlResponse(servicesUrl1);
+        JsonNode node = mapper.readTree(getBodyResponse(getBodyResponse(servicesUrl1))).get("_embedded").get("units");
+
+        return mapService;
     }
 
-    private String getUrlResponse (String url){
+    private String getBodyResponse (String url){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setBasicAuth(login, password);
