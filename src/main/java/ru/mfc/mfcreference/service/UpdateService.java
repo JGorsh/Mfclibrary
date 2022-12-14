@@ -83,8 +83,12 @@ public class UpdateService {
 
     private Map<String, Object> getUnitService(String unitId) throws JsonProcessingException {
         String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
-        JsonNode node = mapper.readTree(getBodyResponse(getBodyResponse(servicesUrl1))).get("_embedded").get("units");
+        JsonNode node = mapper.readTree(getBodyResponse(getBodyResponse(servicesUrl1))).get("children");
+        if (node.isArray()) {
+            for (JsonNode objNode : node) {
 
+            }
+        }
         return mapService;
     }
 
