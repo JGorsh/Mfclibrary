@@ -1,4 +1,4 @@
-package db;
+package ru.mfc.mfcreference.db;
 
 import org.hibernate.dialect.PostgreSQL94Dialect;
 import org.springframework.stereotype.Component;

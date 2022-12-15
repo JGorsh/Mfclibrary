@@ -34,7 +34,7 @@ public class UpdateService {
 
     private Office office;
 
-    private Map<String, Object> mapService = new HashMap<>();
+    private Map<Long, Object> mapService = new HashMap<>();
 
     private Map<String, Object> mapOfficeName = new HashMap<>();
 
@@ -59,7 +59,7 @@ public class UpdateService {
             if (node.isArray()) {
                 for (JsonNode objNode : node) {
                     office = new Office();
-                    long unitId = objNode.get("id").asLong();
+                    Long unitId = objNode.get("id").asLong();
                     mapOfficeName.put("id", unitId );
                     mapOfficeName.put("name", objNode.get("name").asText());
                     mapOfficeName.put("email", objNode.get("email").asText());
@@ -72,24 +72,29 @@ public class UpdateService {
                     office.setOfficeName(mapOfficeName);
                     office.setOfficeId(unitId);
 
-//                    map.put(unitId,getUnitService(unitId));
-//                    office.setOfficeService(map);
-                    //System.out.println(office.getOfficeService());
+
+                    String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
+                    JsonNode nodeUnitService = mapper.readTree(getBodyResponse(servicesUrl1));
+                    mapService.put(unitId,getUnitService(nodeUnitService));
+                    office.setOfficeService(mapService);
                     officeService.save(office);
                 }
             }
         }
     }
 
-    private Map<String, Object> getUnitService(String unitId) throws JsonProcessingException {
-        String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
-        JsonNode node = mapper.readTree(getBodyResponse(getBodyResponse(servicesUrl1))).get("children");
-        if (node.isArray()) {
-            for (JsonNode objNode : node) {
-
+    private Map<String, Object> getUnitService(JsonNode node) throws JsonProcessingException {
+        Map<String, Object> mapChildren = new HashMap<>();
+        if (node.isArray() && node.hasNonNull("children")) {
+            JsonNode nodeChildren = node.get("children");
+            for (JsonNode objNode : nodeChildren) {
+                mapChildren.put("children", getUnitService(objNode));
+                mapChildren.put("description", objNode.get("description"));
+                mapChildren.put("id",objNode.get("id"));
+                mapChildren.put("name",objNode.get("name"));
             }
         }
-        return mapService;
+        return mapChildren;
     }
 
     private String getBodyResponse (String url){

@@ -1,4 +1,4 @@
-package config;
+package ru.mfc.mfcreference.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

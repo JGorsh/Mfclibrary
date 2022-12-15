@@ -1,7 +1,7 @@
 package ru.mfc.mfcreference.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import db.JsonType;
+import ru.mfc.mfcreference.db.JsonType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -32,7 +32,7 @@ public class Office implements Serializable {
 
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
-    private Map<String, Object> officeService = new HashMap<>();
+    private Map<Long, Object> officeService = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -58,11 +58,11 @@ public class Office implements Serializable {
         this.officeIsActive = officeIsActive;
     }
 
-    public Map<String, Object> getOfficeService() {
+    public Map<Long, Object> getOfficeService() {
         return officeService;
     }
 
-    public void setOfficeService(Map<String, Object> officeService) {
+    public void setOfficeService(Map<Long, Object> officeService) {
         this.officeService = officeService;
     }
 
