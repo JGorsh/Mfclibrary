@@ -90,9 +90,9 @@ public class UpdateService {
             for (JsonNode objNode : node) {
                 UnitServiceDto children = new UnitServiceDto();
                 if(!objNode.get("children").isNull()){
-                    children.setChildren(getUnitService(objNode));
+                    JsonNode objNodeRec = objNode.get("children");
+                    children.setChildren(getUnitService(objNodeRec));
                 }
-                children.setChildren(unitServiceDtoList);
                 children.setId(objNode.get("id").asLong());
                 children.setDescription(objNode.get("description").asText());
                 children.setName(objNode.get("name").asText());
