@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import ru.mfc.mfcreference.dto.UnitServiceDto;
 import ru.mfc.mfcreference.entities.Office;
 
 import java.util.*;
@@ -34,7 +35,7 @@ public class UpdateService {
 
     private Office office;
 
-    private Map<Long, Object> mapService = new HashMap<>();
+
 
     private Map<String, Object> mapOfficeName = new HashMap<>();
 
@@ -72,7 +73,7 @@ public class UpdateService {
                     office.setOfficeName(mapOfficeName);
                     office.setOfficeId(unitId);
 
-
+                    Map<Long, Object> mapService = new HashMap<>();
                     String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
                     JsonNode nodeUnitService = mapper.readTree(getBodyResponse(servicesUrl1));
                     mapService.put(unitId,getUnitService(nodeUnitService));
@@ -83,18 +84,22 @@ public class UpdateService {
         }
     }
 
-    private Map<String, Object> getUnitService(JsonNode node) throws JsonProcessingException {
-        Map<String, Object> mapChildren = new HashMap<>();
-        if (node.isArray() && node.hasNonNull("children")) {
-            JsonNode nodeChildren = node.get("children");
-            for (JsonNode objNode : nodeChildren) {
-                mapChildren.put("children", getUnitService(objNode));
-                mapChildren.put("description", objNode.get("description"));
-                mapChildren.put("id",objNode.get("id"));
-                mapChildren.put("name",objNode.get("name"));
+    private List<UnitServiceDto> getUnitService(JsonNode node) throws JsonProcessingException {
+        List<UnitServiceDto> unitServiceDtoList = new ArrayList<>();
+        if (node.isArray() ) {
+            for (JsonNode objNode : node) {
+                UnitServiceDto children = new UnitServiceDto();
+                if(!objNode.get("children").isNull()){
+                    children.setChildren(getUnitService(objNode));
+                }
+                children.setChildren(unitServiceDtoList);
+                children.setId(objNode.get("id").asLong());
+                children.setDescription(objNode.get("description").asText());
+                children.setName(objNode.get("name").asText());
+                unitServiceDtoList.add(children);
             }
         }
-        return mapChildren;
+        return unitServiceDtoList;
     }
 
     private String getBodyResponse (String url){
