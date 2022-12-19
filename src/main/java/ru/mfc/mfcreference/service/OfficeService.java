@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import ru.mfc.mfcreference.entities.Office;
 import ru.mfc.mfcreference.repository.OfficeRepository;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class OfficeService {
 
@@ -13,5 +16,9 @@ public class OfficeService {
 
     public Office save (Office office){
         return officeRepository.save(office);
+    }
+
+    public List<String> getAllOfficeName(){
+        return officeRepository.findAllOfficeName();
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.mfc.mfcreference.db.JsonType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import ru.mfc.mfcreference.dto.OfficeNameDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +26,8 @@ public class Office implements Serializable {
 
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
-    private Map<String, Object> officeName = new HashMap<>();
+    //private Map<String, Object> officeName = new HashMap<>();
+    private OfficeNameDto officeName;
 
     @Column
     private boolean officeIsActive;
@@ -33,6 +35,7 @@ public class Office implements Serializable {
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
     private Map<Long, Object> officeService = new HashMap<>();
+
 
     public Long getId() {
         return id;
@@ -66,11 +69,19 @@ public class Office implements Serializable {
         this.officeService = officeService;
     }
 
-    public Map<String, Object> getOfficeName() {
+//    public Map<String, Object> getOfficeName() {
+//        return officeName;
+//    }
+//
+//    public void setOfficeName(Map<String, Object> officeName) {
+//        this.officeName = officeName;
+//    }
+
+    public OfficeNameDto getOfficeName() {
         return officeName;
     }
 
-    public void setOfficeName(Map<String, Object> officeName) {
+    public void setOfficeName(OfficeNameDto officeName) {
         this.officeName = officeName;
     }
 }
