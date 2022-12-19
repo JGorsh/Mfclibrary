@@ -1,5 +1,8 @@
 package ru.mfc.mfcreference.dto;
 
+import org.springframework.stereotype.Component;
+
+
 public class OfficeNameDto {
 
     private String email;

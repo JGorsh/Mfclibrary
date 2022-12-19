@@ -26,8 +26,8 @@ public class Office implements Serializable {
 
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
-    //private Map<String, Object> officeName = new HashMap<>();
-    private OfficeNameDto officeName;
+    private Map<String, Object> officeName = new HashMap<>();
+    //private OfficeNameDto officeName;
 
     @Column
     private boolean officeIsActive;
@@ -69,19 +69,19 @@ public class Office implements Serializable {
         this.officeService = officeService;
     }
 
-//    public Map<String, Object> getOfficeName() {
-//        return officeName;
-//    }
-//
-//    public void setOfficeName(Map<String, Object> officeName) {
-//        this.officeName = officeName;
-//    }
-
-    public OfficeNameDto getOfficeName() {
+    public Map<String, Object> getOfficeName() {
         return officeName;
     }
 
-    public void setOfficeName(OfficeNameDto officeName) {
+    public void setOfficeName(Map<String, Object> officeName) {
         this.officeName = officeName;
     }
+//
+//    public OfficeNameDto getOfficeName() {
+//        return officeName;
+//    }
+//
+//    public void setOfficeName(OfficeNameDto officeName) {
+//        this.officeName = officeName;
+//    }
 }

@@ -36,7 +36,7 @@ public class UpdateService {
 
     private Office office;
 
-    //private Map<String, Object> mapOfficeName = new HashMap<>();
+    private Map<String, Object> mapOfficeName = new HashMap<>();
 
     @Autowired
     OfficeService officeService;
@@ -60,21 +60,22 @@ public class UpdateService {
                 for (JsonNode objNode : node) {
                     office = new Office();
                     Long unitId = objNode.get("id").asLong();
-//                    mapOfficeName.put("id", unitId );
-//                    mapOfficeName.put("name", objNode.get("name").asText());
-//                    mapOfficeName.put("email", objNode.get("email").asText());
-//                    mapOfficeName.put("phone", objNode.get("phone").asText());
-//                    mapOfficeName.put("latitude", objNode.get("latitude").asDouble());
-//                    mapOfficeName.put("longitude", objNode.get("longitude").asDouble());
-//                    mapOfficeName.put("shortName", objNode.get("shortName").asText());
-//                    mapOfficeName.put("workingHours", objNode.get("workingHours").asText());
-//                    mapOfficeName.put("legalAddressDescription", objNode.get("legalAddressDescription").asText());
-//                    office.setOfficeName(mapOfficeName);
-                    OfficeNameDto officeName = new OfficeNameDto(unitId,objNode.get("name").asText(), objNode.get("email").asText(),
-                            objNode.get("phone").asText(), objNode.get("latitude").asDouble(), objNode.get("longitude").asDouble(),
-                            objNode.get("shortName").asText(), objNode.get("workingHours").asText(), objNode.get("legalAddressDescription").asText());
+                    mapOfficeName.put("id", unitId );
+                    mapOfficeName.put("name", objNode.get("name").asText());
+                    mapOfficeName.put("email", objNode.get("email").asText());
+                    mapOfficeName.put("phone", objNode.get("phone").asText());
+                    mapOfficeName.put("latitude", objNode.get("latitude").asDouble());
+                    mapOfficeName.put("longitude", objNode.get("longitude").asDouble());
+                    mapOfficeName.put("shortName", objNode.get("shortName").asText());
+                    mapOfficeName.put("workingHours", objNode.get("workingHours").asText());
+                    mapOfficeName.put("legalAddressDescription", objNode.get("legalAddressDescription").asText());
+                    office.setOfficeName(mapOfficeName);
+//                    OfficeNameDto officeName = new OfficeNameDto(unitId,objNode.get("name").asText(), objNode.get("email").asText(),
+//                            objNode.get("phone").asText(), objNode.get("latitude").asDouble(), objNode.get("longitude").asDouble(),
+//                            objNode.get("shortName").asText(), objNode.get("workingHours").asText(), objNode.get("legalAddressDescription").asText());
+//                    office.setOfficeName(officeName);
                     office.setOfficeId(unitId);
-                    office.setOfficeName(officeName);
+
                     Map<Long, Object> mapService = new HashMap<>();
                     String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
                     JsonNode nodeUnitService = mapper.readTree(getBodyResponse(servicesUrl1));

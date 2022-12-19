@@ -18,7 +18,7 @@ public class OfficeService {
         return officeRepository.save(office);
     }
 
-    public List<String> getAllOfficeName(){
-        return officeRepository.findAllOfficeName();
+    public List<Office> findAllOffice() {
+        return officeRepository.findAll();
     }
 }
