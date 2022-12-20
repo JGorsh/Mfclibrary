@@ -34,13 +34,11 @@ public class RefBookController {
     ObjectMapper objectMapper;
 
     @GetMapping(path = "/units")
-    public List<OfficeNameDto> resultsList() throws IOException {
-        //log.debug(officeService.findAllOffice());
-        List<OfficeNameDto> officeList = officeService.findAllOfficeName();
+    public Object resultsList() throws IOException {
+        List<Office> officeList = officeService.findAllOffice();
+        List<Object> officeNameList = officeList.stream().map(p->p.getOfficeName()).collect(Collectors.toList());
 
-        //List<OfficeNameDto> officeNameDtoList = officeList.stream().map(p->p.getOfficeName()).collect(Collectors.toList());
-
-        return officeList;
+        return officeNameList;
     }
 //    @GetMapping(path = "/service")
 //    public Result<?> resultsList(@RequestParam() Integer page, @RequestParam() Integer pageSize) {

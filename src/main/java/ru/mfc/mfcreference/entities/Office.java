@@ -1,10 +1,10 @@
 package ru.mfc.mfcreference.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ru.mfc.mfcreference.db.JsonType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import ru.mfc.mfcreference.dto.OfficeNameDto;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +13,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "office")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @TypeDef(name = "JsonType", typeClass = JsonType.class)
 public class Office implements Serializable {
 
@@ -22,19 +23,18 @@ public class Office implements Serializable {
     private Long id;
 
     @Column
-    private Long officeId;
+    private String officeId;
 
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
-    //private Map<String, Object> officeName = new HashMap<>();
-    private OfficeNameDto officeName;
+    private Map<String, Object> officeName = new HashMap<>();
 
     @Column
     private boolean officeIsActive;
 
     @Type(type = "JsonType")
     @Column(columnDefinition = "jsonb")
-    private Map<Long, Object> officeService = new HashMap<>();
+    private Map<String, Object> officeService = new HashMap<>();
 
 
     public Long getId() {
@@ -45,11 +45,11 @@ public class Office implements Serializable {
         this.id = id;
     }
 
-    public Long getOfficeId() {
+    public String getOfficeId() {
         return officeId;
     }
 
-    public void setOfficeId(Long officeId) {
+    public void setOfficeId(String officeId) {
         this.officeId = officeId;
     }
 
@@ -61,27 +61,19 @@ public class Office implements Serializable {
         this.officeIsActive = officeIsActive;
     }
 
-    public Map<Long, Object> getOfficeService() {
+    public Map<String, Object> getOfficeService() {
         return officeService;
     }
 
-    public void setOfficeService(Map<Long, Object> officeService) {
+    public void setOfficeService(Map<String, Object> officeService) {
         this.officeService = officeService;
     }
 
-//    public Map<String, Object> getOfficeName() {
-//        return officeName;
-//    }
-//
-//    public void setOfficeName(Map<String, Object> officeName) {
-//        this.officeName = officeName;
-//    }
-
-    public OfficeNameDto getOfficeName() {
+    public Map<String, Object> getOfficeName() {
         return officeName;
     }
 
-    public void setOfficeName(OfficeNameDto officeName) {
+    public void setOfficeName(Map<String, Object> officeName) {
         this.officeName = officeName;
     }
 }

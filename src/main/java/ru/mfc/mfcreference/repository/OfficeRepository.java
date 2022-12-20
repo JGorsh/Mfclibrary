@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
-    @Query(value="SELECT office_name FROM office ", nativeQuery = true)
-    public List<OfficeNameDto> findAllOfficeName();
+    @Query(value="SELECT * FROM office ", nativeQuery = true)
+    List<Office> findAllOffice();
 
 }
