@@ -34,15 +34,15 @@ public class RefBookController {
     ObjectMapper objectMapper;
 
     @GetMapping(path = "/units")
-    public Object resultsList() throws IOException {
+    public Object resultsList(){
         List<Office> officeList = officeService.findAllOffice();
         List<Object> officeNameList = officeList.stream().map(p->p.getOfficeName()).collect(Collectors.toList());
-
         return officeNameList;
     }
-//    @GetMapping(path = "/service")
-//    public Result<?> resultsList(@RequestParam() Integer page, @RequestParam() Integer pageSize) {
-//        Page<AdvertisingResult> data = advertisingService.getAdvertisingResults(page, pageSize);
-//        return new Result<>(data);
-//    }
+
+    @GetMapping(path = "/service")
+    public Object serviceList(@RequestParam() String officeId) {
+        Office officeServiceResult = officeService.getOfficeByOfficeId(officeId);
+        return officeServiceResult.getOfficeService();
+    }
 }

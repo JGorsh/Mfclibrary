@@ -14,4 +14,6 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
     @Query(value="SELECT * FROM office ", nativeQuery = true)
     List<Office> findAllOffice();
 
+    Office getOfficeByOfficeId(String officeId);
+
 }

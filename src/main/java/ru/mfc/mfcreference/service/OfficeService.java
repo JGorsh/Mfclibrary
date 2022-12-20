@@ -22,4 +22,8 @@ public class OfficeService {
         return officeRepository.findAllOffice();
     }
 
+    public Office getOfficeByOfficeId(String officeId){
+        return officeRepository.getOfficeByOfficeId(officeId);
+    }
+
 }
