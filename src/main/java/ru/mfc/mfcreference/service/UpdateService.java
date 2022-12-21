@@ -58,7 +58,6 @@ public class UpdateService {
             JsonNode node = mapper.readTree(getBodyResponse(oktmoObjectListUrl1)).get("_embedded").get("units");
             if (node.isArray()) {
                 for (JsonNode objNode : node) {
-                    office = new Office();
                     String unitId = objNode.get("id").asText();
                     mapOfficeName.put("id", unitId );
                     mapOfficeName.put("name", objNode.get("name").asText());
@@ -69,18 +68,23 @@ public class UpdateService {
                     mapOfficeName.put("shortName", objNode.get("shortName").asText());
                     mapOfficeName.put("workingHours", objNode.get("workingHours").asText());
                     mapOfficeName.put("legalAddressDescription", objNode.get("legalAddressDescription").asText());
-                    office.setOfficeName(mapOfficeName);
-//                    OfficeNameDto officeName = new OfficeNameDto(unitId,objNode.get("name").asText(), objNode.get("email").asText(),
-//                            objNode.get("phone").asText(), objNode.get("latitude").asDouble(), objNode.get("longitude").asDouble(),
-//                            objNode.get("shortName").asText(), objNode.get("workingHours").asText(), objNode.get("legalAddressDescription").asText());
-//                    office.setOfficeName(officeName);
-                    office.setOfficeId(unitId);
 
                     Map<String, Object> mapService = new HashMap<>();
                     String servicesUrl1 = servicesUrl + unitId + "&preRecord=true";
                     JsonNode nodeUnitService = mapper.readTree(getBodyResponse(servicesUrl1));
                     mapService.put(String.valueOf(unitId),getUnitService(nodeUnitService));
-                    office.setOfficeService(mapService);
+
+                    office = officeService.getOfficeByOfficeId(unitId);
+                    if(office!=null){
+                        office.setOfficeName(mapOfficeName);
+                        office.setOfficeService(mapService);
+                    }
+                    else {
+                        office = new Office();
+                        office.setOfficeId(unitId);
+                        office.setOfficeName(mapOfficeName);
+                        office.setOfficeService(mapService);
+                    }
                     officeService.save(office);
                 }
             }
