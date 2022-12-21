@@ -26,10 +26,4 @@ public class RefConfiguration {
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return mapper;
     }
-
-    @Bean
-    public ScheduleTaskService scheduleService(){
-        return new ScheduleTaskService();
-    }
-
 }
