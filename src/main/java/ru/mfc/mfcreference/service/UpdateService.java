@@ -23,16 +23,16 @@ public class UpdateService {
     private String oktmoListUrl;
 
     @Value("${configs.oktmoObjectListUrl}")
-    String oktmoObjectListUrl;
+    private String oktmoObjectListUrl;
 
     @Value("${configs.servicesUrl}")
-    String servicesUrl;
+    private String servicesUrl;
 
     @Value("${configs.login}")
-    String login;
+    private String login;
 
     @Value("${configs.password}")
-    String password;
+    private String password;
 
     private Office office;
 
@@ -75,16 +75,13 @@ public class UpdateService {
                     mapService.put(String.valueOf(unitId),getUnitService(nodeUnitService));
 
                     office = officeService.getOfficeByOfficeId(unitId);
-                    if(office!=null){
-                        office.setOfficeName(mapOfficeName);
-                        office.setOfficeService(mapService);
-                    }
-                    else {
+                    if(office==null){
                         office = new Office();
                         office.setOfficeId(unitId);
-                        office.setOfficeName(mapOfficeName);
-                        office.setOfficeService(mapService);
                     }
+
+                    office.setOfficeName(mapOfficeName);
+                    office.setOfficeService(mapService);
                     officeService.save(office);
                 }
             }

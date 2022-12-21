@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.mfc.mfcreference.service.UpdateService;
 
 @SpringBootApplication
-@EnableScheduling
 public class MfcReferenceApplication {
     public static void main(String[] args) throws JsonProcessingException {
 

@@ -2,7 +2,6 @@ package ru.mfc.mfcreference.web;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +16,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api/refbook")
 public class RefBookController {
-
-    private static final Logger log = Logger.getLogger(RefBookController.class);
 
     @Autowired
     OfficeService officeService;
