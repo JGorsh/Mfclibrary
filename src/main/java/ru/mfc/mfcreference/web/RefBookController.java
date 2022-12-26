@@ -20,9 +20,6 @@ public class RefBookController {
     @Autowired
     OfficeService officeService;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
     @GetMapping(path = "/units")
     public Object resultsList(){
         List<Office> officeList = officeService.findAllOffice();
