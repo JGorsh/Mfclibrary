@@ -10,9 +10,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.mfc.mfcreference.entities.Office;
 import ru.mfc.mfcreference.service.OfficeService;
+import org.springframework.http.MediaType;
+import java.util.Arrays;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RefBookController.class)
 @ExtendWith(MockitoExtension.class)
@@ -26,13 +29,13 @@ class RefBookControllerTest {
 
     @Test
     @DisplayName("Test findAllOffice()")
-    void resultsList() {
+    void resultsList() throws Exception {
         when(officeService.findAllOffice()).thenReturn(Arrays.asList(new Office()));
-        mockMvc.perform(get("/units")
+        mockMvc.perform(get("/api/refbook/units")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(userService,times(1)).findAll();
+        verify(officeService,times(1)).findAllOffice();
     }
 
     @Test
