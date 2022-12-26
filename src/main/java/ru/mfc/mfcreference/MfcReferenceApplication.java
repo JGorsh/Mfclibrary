@@ -9,7 +9,7 @@ import ru.mfc.mfcreference.service.UpdateService;
 
 @SpringBootApplication
 public class MfcReferenceApplication {
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args){
 
         SpringApplication.run(MfcReferenceApplication.class, args);
     }
